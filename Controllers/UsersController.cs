@@ -24,7 +24,7 @@ namespace Table.Controllers
             _context = context;
             if (!_context.Useres.Any()) //db.SomeEntityCollection.Count()
             {
-                _context.Useres.Add(new User { login = "ozevgendalf", password = getMd5Hash("2w5r6t8u") });
+                _context.Useres.Add(new User { login = "ozevgendalf", password = getMd5Hash("24242") });
                 _context.Useres.Add(new User { login = "jeka", password = getMd5Hash("fgiuhuh") });
                 _context.SaveChanges();
             }
