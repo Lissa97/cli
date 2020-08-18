@@ -1,0 +1,109 @@
+
+	
+<h3>{{selectTable.rus_name}}</h3>
+<hr>
+<button class="btn btn-primary" (click)="modal_add.open()">Добавить элемент</button>
+<clr-datagrid ><!--(clrDgRefresh)="refresh($event)" [clrDgLoading]="loading"-->
+	<clr-dg-column *ngFor="let row of rows; index as i" [clrDgField]="row.name">{{row.rus_name}}</clr-dg-column>
+	
+
+	<clr-dg-row *clrDgItems="let user of users; index as i">
+		<clr-dg-action-overflow>
+			<button class="action-item" (click)="onClickEdit(user)">Изменить</button>
+			<button class="action-item" (click)="onDelete(user)">Удалить</button>
+		</clr-dg-action-overflow>
+		<clr-dg-cell *ngFor="let row of rows" >{{user[row.name]}}</clr-dg-cell>
+		
+	</clr-dg-row>
+
+	<clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+        <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Строк на странице</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        из {{pagination.totalItems}}
+    </clr-dg-pagination>
+</clr-dg-footer> 
+</clr-datagrid>
+
+<clr-modal #modal_add> 
+    <h3 class="modal-title">Добавить элемент</h3>
+    <div class="modal-body">
+	<form clrForm>
+	
+		<div *ngFor="let row of rows" >
+		
+		  <clr-input-container *ngIf="row.type == 'int'">
+			<label  class="clr-col-12 clr-col-md-4">{{row.rus_name}}</label>
+			<input type = "number" class="clr-col-12 clr-col-md-4" style="width: 300px" clrInput id="{{row.name}}" />
+			<clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+		  </clr-input-container>
+		  
+		  <clr-input-container *ngIf="row.type == 'string'">
+			<label  class="clr-col-12 clr-col-md-4">{{row.rus_name}}</label>
+			<input class="clr-col-12 clr-col-md-4" style="width: 300px" clrInput  id="{{row.name}}" />
+			<clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+		  </clr-input-container>
+		  
+		  <clr-textarea-container *ngIf="row.type == 'text'">
+			<label class="clr-col-12 clr-col-md-4">{{row.rus_name}}</label>
+			<textarea class="clr-col-12 clr-col-md-4" style="width: 300px" clrTextarea id="{{row.name}}" required></textarea>
+		  </clr-textarea-container>
+		  
+		  <clr-select-container *ngIf="(row.type != 'text')&&(row.type != 'string')&&(row.type != 'int')">
+		  <label class="clr-col-12 clr-col-md-4">{{row.rus_name}}</label>
+		  <select class="clr-col-12 clr-col-md-4" style="width: 300px" clrSelect id="{{row.name}}"  required>
+		  
+			<option  *ngFor="let opt of selectData[row.type]" value="{{opt[0]}}">  {{opt[1]}} </option>
+
+		  </select>
+		  
+		</clr-select-container>
+		</div>
+	</form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.modal_add.close()">Закрыть</button>
+        <button type="button" class="btn btn-primary" (click)="onAdd()">Добавить</button>
+    </div>
+</clr-modal>
+
+ <clr-modal   #modal_edit> 
+    <h3 class="modal-title">Изменить элемент</h3>
+    <div class="modal-body">
+	<form clrForm >
+		<div *ngFor="let row of rows; index as i;" >
+		
+		  <clr-input-container *ngIf="row.type == 'int'">
+			<label class="clr-col-12 clr-col-md-4" >{{row.rus_name}}</label>
+			<input type = "number" class="clr-col-12 clr-col-md-4" style="width: 300px" clrInput id="edit_{{row.name}}" value="{{editRow[row.name]}}"/>
+		  </clr-input-container>
+		  
+		  <clr-input-container *ngIf="row.type == 'string'">
+			<label class="clr-col-12 clr-col-md-4" >{{row.rus_name}}</label>
+			<input class="clr-col-12 clr-col-md-4" style="width: 300px" clrInput  id="edit_{{row.name}}" value="{{editRow[row.name]}}"/>
+		  </clr-input-container>
+		  
+		  <clr-textarea-container *ngIf="row.type == 'text'">
+			<label class="clr-col-12 clr-col-md-4">{{row.rus_name}}</label>
+			<textarea class="clr-col-12 clr-col-md-4" clrTextarea id="edit_{{row.name}}" required style="width: 300px">{{editRow[row.name]}}</textarea>
+		  </clr-textarea-container>
+		  
+		  <clr-select-container *ngIf="(row.type != 'text')&&(row.type != 'string')&&(row.type != 'int')" >
+		  <label class="clr-col-12 clr-col-md-4" style="width: 400px">{{row.rus_name}}</label>
+		  <select class="clr-col-12 clr-col-md-4" clrSelect id="edit_{{row.name}}" style="width: 300px" required>
+
+			<option *ngFor="let opt of selectData[row.type]" value="{{opt[0]}}">  {{opt[1]}} </option>
+
+		  </select>
+		  
+		 </clr-select-container>
+		</div>
+	</form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.modal_edit.close()">Закрыть</button>
+        <button type="button" class="btn btn-primary" (click)="onEdit()">Изменить</button>
+    </div>
+</clr-modal>   
