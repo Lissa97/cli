@@ -1,0 +1,35 @@
+  
+    <header class="header header-4">
+        
+		<div class="header-nav">
+				
+		</div>
+		<div class="branding">
+			<a href="..." class="nav-link">
+				
+				<span class="title">Дом Детского творчества</span>
+			</a>
+		</div>
+		<div class="header-actions">
+			<a href="#" class="nav-link nav-text">
+				
+				<span class="title">{{name}}</span>
+			</a>
+			<a  routerLink="/Auth" class="nav-link nav-text ">
+				<clr-icon shape="logout"></clr-icon>
+				
+			</a>
+		</div>
+    </header>
+
+  <nav class="subnav">
+       <ul id="demoTabs" class="nav" role="tablist">
+			<li *ngFor="let item of items" role="presentation" class="nav-item">
+				<a routerLink="/{{item.name}}"><button id="tab1" class="btn btn-link nav-link" [class.active]="selectBlock === item.name"aria-controls="panel1"
+						aria-selected="true" type="button" >{{item.rusName}}</button></a>
+			</li>
+			
+		</ul>
+		
+    </nav>
+ 
