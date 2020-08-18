@@ -1,0 +1,25 @@
+<app-top-menu [selectBlock]="blockName"></app-top-menu >
+
+
+<div class="content-container" style="background-color: #ffffff;">
+	   
+             
+        <clr-vertical-nav [clrVerticalNavCollapsible]="true" class="nav-trigger--bottom" style="height: 800px;">
+			
+			
+			
+			<a *ngFor="let item of menu " clrVerticalNavLink routerLinkActive="active" routerLink="{{item.name}}" >
+				<clr-icon shape="certificate" clrVerticalNavIcon></clr-icon>
+				{{item.rus_name}}
+			</a>
+			
+		</clr-vertical-nav>
+               
+        <div class="content-area" >
+       
+			<router-outlet></router-outlet>
+		</div>
+     
+    </div>
+               
+
